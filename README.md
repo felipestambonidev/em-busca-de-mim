@@ -4,6 +4,26 @@ Landing page de inscrição (lista de espera) da jornada **Em Busca de Mim**, co
 
 Feita em **Next.js 16** (App Router) + **GSAP** (ScrollTrigger, SplitText, DrawSVG, ScrollTo) com `@gsap/react`.
 
+## Identidade visual
+
+- **Cores:** `#b38065` (claro) e `#170c0a` (escuro). Os tons de fundo e de apoio são misturas dessas duas cores com branco (veja os tokens em `app/globals.css`).
+- **Fontes:**
+  - **Bebas Kai:** títulos.
+  - **Brittany Signature:** assinaturas e palavras em destaque.
+  - **Montserrat:** texto corrido (carregada pelo Google Fonts).
+
+### Instalando as fontes Bebas Kai e Brittany Signature
+
+Elas não estão no Google Fonts. Coloque os arquivos em `public/fonts/` com estes nomes. Qualquer formato serve; `.woff2` é o mais leve.
+
+```
+public/fonts/BebasKai.woff2              (ou .otf / .ttf)
+public/fonts/BrittanySignature.woff2     (ou .otf / .ttf)
+```
+
+Enquanto os arquivos não estiverem lá, o site usa as substitutas Bebas Neue (do mesmo estúdio da Bebas Kai) e Mrs Saint Delafield.
+**Atenção:** a Brittany Signature costuma ser gratuita apenas para uso pessoal. Para um site comercial, confirme a licença.
+
 ## Rodando localmente
 
 ```bash

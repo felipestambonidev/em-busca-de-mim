@@ -25,8 +25,8 @@ export default function Thread() {
           const at = (i + 0.35) / words.length - 0.08;
           tl.fromTo(
             w,
-            { color: "#D4B4A8", y: 14, opacity: 0.6 },
-            { color: "#5B1E25", y: 0, opacity: 1, duration: 0.16, ease: "power1.out" },
+            { color: "#E3D2C6", y: 14, opacity: 0.7 },
+            { color: "#B38065", y: 0, opacity: 1, duration: 0.16, ease: "power1.out" },
             Math.max(0, at),
           );
         });

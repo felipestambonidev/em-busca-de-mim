@@ -1,25 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Jost, Pinyon_Script } from "next/font/google";
+import { Bebas_Neue, Montserrat, Mrs_Saint_Delafield } from "next/font/google";
+import "./fonts.css";
 import "./globals.css";
 
-const display = Bodoni_Moda({
+/*
+ * Fontes da marca:
+ *   Bebas Kai          → títulos      (arquivo em /public/fonts; fallback: Bebas Neue, do mesmo estúdio)
+ *   Brittany Signature → assinaturas  (arquivo em /public/fonts; fallback: Mrs Saint Delafield)
+ *   Montserrat         → texto corrido
+ */
+const sans = Montserrat({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const sans = Jost({
-  subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const script = Pinyon_Script({
+const displayFallback = Bebas_Neue({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-script",
+  variable: "--font-display-fallback",
+  display: "swap",
+});
+
+const scriptFallback = Mrs_Saint_Delafield({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-script-fallback",
   display: "swap",
 });
 
@@ -41,14 +48,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F8F2EB",
+  themeColor: "#F7F1EC",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="pt-BR"
-      className={`${display.variable} ${sans.variable} ${script.variable}`}
+      className={`${sans.variable} ${displayFallback.variable} ${scriptFallback.variable}`}
       suppressHydrationWarning
     >
       <head>

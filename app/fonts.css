@@ -1,0 +1,33 @@
+/*
+ * Fontes da marca que não estão no Google Fonts.
+ * Coloque os arquivos em /public/fonts com estes nomes (qualquer um dos formatos serve):
+ *   BebasKai.woff2  | BebasKai.otf  | BebasKai.ttf
+ *   BrittanySignature.woff2 | BrittanySignature.otf | BrittanySignature.ttf
+ * Enquanto os arquivos não existirem, entram as substitutas definidas em app/layout.tsx.
+ */
+
+@font-face {
+  font-family: "Bebas Kai";
+  src:
+    local("Bebas Kai"),
+    local("BebasKai"),
+    url("/fonts/BebasKai.woff2") format("woff2"),
+    url("/fonts/BebasKai.otf") format("opentype"),
+    url("/fonts/BebasKai.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brittany Signature";
+  src:
+    local("Brittany Signature"),
+    local("BrittanySignature"),
+    url("/fonts/BrittanySignature.woff2") format("woff2"),
+    url("/fonts/BrittanySignature.otf") format("opentype"),
+    url("/fonts/BrittanySignature.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
