@@ -116,8 +116,8 @@ export default function About() {
         <div className="about__frame">
           <Image
             className="about__img"
-            src="/fotos/tay-marfim.jpg"
-            alt="Tay Queiroz de blusa marfim e braços cruzados, com olhar confiante"
+            src="/fotos/tay-palco.jpg"
+            alt="Tay Queiroz de vestido preto, sorrindo enquanto fala ao microfone em um palco"
             fill
             sizes="(max-width: 900px) 86vw, 34vw"
             quality={82}
