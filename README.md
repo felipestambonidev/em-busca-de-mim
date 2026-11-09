@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Em Busca de Mim — Lista de espera
 
-## Getting Started
+Landing page de inscrição (lista de espera) da jornada **Em Busca de Mim**, com Tay Queiroz.
 
-First, run the development server:
+Feita em **Next.js 16** (App Router) + **GSAP** (ScrollTrigger, SplitText, DrawSVG, ScrollTo) com `@gsap/react`.
+
+## Rodando localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Onde as inscrições vão parar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O formulário envia para `POST /api/inscricao`, que valida os dados e:
 
-## Learn More
+- se a variável `INSCRICAO_WEBHOOK_URL` estiver definida, encaminha o lead em JSON para essa URL;
+- se não estiver, apenas registra o lead no log do servidor.
 
-To learn more about Next.js, take a look at the following resources:
+Copie `.env.example` para `.env.local` e preencha. Formato enviado:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```json
+{
+  "nome": "Maria Clara Souza",
+  "email": "maria@exemplo.com",
+  "whatsapp": "+5511987654321",
+  "interesses": ["Fé", "Carreira"],
+  "consentimento": true,
+  "utm": { "utm_source": "instagram" },
+  "origem": "lista-de-espera",
+  "criadoEm": "2026-11-09T18:50:45.673Z"
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Parâmetros `utm_*` da URL são capturados automaticamente.
 
-## Deploy on Vercel
+## Estrutura
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `app/page.tsx`: composição da página
+- `app/globals.css`: sistema visual (cores, tipografia, layout)
+- `components/`: seções (Hero, About, Thread, Journey, Manifesto, Waitlist) e o raminho botânico em SVG
+- `lib/gsap.ts`: registro dos plugins GSAP e rolagem suave até o formulário
+- `lib/lead.ts`: validação compartilhada entre o cliente e a API
+- `public/fotos/`: fotos da Tay
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Acessibilidade
+
+- Com `prefers-reduced-motion`, todas as animações de entrada e de scroll ficam desligadas.
+- Com `prefers-reduced-transparency`, o cabeçalho translúcido e o card do formulário ficam sólidos.
+- Com `prefers-contrast`, os textos secundários ficam mais escuros.
+- O formulário valida campo a campo com mensagens ligadas via `aria-describedby`.
