@@ -8,7 +8,7 @@ export default function CtaButton({
   className = "",
 }: {
   children: React.ReactNode;
-  variant?: "solid" | "ghost" | "small";
+  variant?: "solid" | "light" | "small";
   className?: string;
 }) {
   return (

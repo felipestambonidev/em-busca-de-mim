@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, SplitText, useGSAP, MOTION_OK, MOTION_REDUCED } from "@/lib/gsap";
-import CtaButton from "./CtaButton";
+import SignupForm from "./SignupForm";
 import Sprig from "./Sprig";
 
 export default function Hero() {
@@ -41,7 +41,8 @@ export default function Hero() {
             0.85,
           )
           .from(sub.lines, { yPercent: 105, stagger: 0.08, duration: 1.2 }, 1.05)
-          .from(q(".hero__eyebrow, .hero__actions, .hero__caption"), { y: 16, autoAlpha: 0, stagger: 0.12, duration: 1.2 }, 1.15)
+          .from(q(".hero__eyebrow, .hero__caption"), { y: 16, autoAlpha: 0, stagger: 0.12, duration: 1.2 }, 1.15)
+          .from(q(".signup"), { y: 36, autoAlpha: 0, duration: 1.5 }, 1.2)
           .fromTo(
             q(".hero .sprig path, .hero .sprig circle"),
             { drawSVG: "0%" },
@@ -54,13 +55,6 @@ export default function Hero() {
           yPercent: 9,
           ease: "none",
           scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
-        });
-        gsap.to(q(".hero__text"), {
-          yPercent: -10,
-          opacity: 0.2, // opacity (não autoAlpha): o hero herda visibility:hidden até a entrada
-
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "35% top", end: "bottom top", scrub: true },
         });
 
         return () => sub.revert();
@@ -90,16 +84,10 @@ export default function Hero() {
         </h1>
 
         <p className="hero__sub">
-          Para mulheres que desejam cuidar de si, assumir o protagonismo da própria história e viver com propósito em
-          todas as áreas da vida.
+          Uma jornada para mulheres que desejam fortalecer sua identidade, aprofundar sua fé e viver com propósito.
         </p>
 
-        <div className="hero__actions">
-          <CtaButton>Quero entrar na lista</CtaButton>
-          <a href="#sobre" className="link-quiet">
-            Conhecer a jornada
-          </a>
-        </div>
+        <SignupForm />
       </div>
 
       <div className="hero__visual">

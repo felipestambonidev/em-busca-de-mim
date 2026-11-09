@@ -47,7 +47,6 @@ Copie `.env.example` para `.env.local` e preencha. Formato enviado:
   "nome": "Maria Clara Souza",
   "email": "maria@exemplo.com",
   "whatsapp": "+5511987654321",
-  "interesses": ["Fé", "Carreira"],
   "consentimento": true,
   "utm": { "utm_source": "instagram" },
   "origem": "lista-de-espera",
@@ -59,9 +58,15 @@ Parâmetros `utm_*` da URL são capturados automaticamente.
 
 ## Estrutura
 
-- `app/page.tsx`: composição da página
+A página tem 3 seções:
+
+1. **Hero** (`components/Hero.tsx`): título, foto e o formulário de inscrição (`components/SignupForm.tsx`).
+2. **A jornada** (`components/About.tsx`): "O que é", "Aqui, acreditamos que…" e "Uma jornada para mulheres que desejam".
+3. **Manifesto** (`components/Closing.tsx`): frase final, botão de volta ao formulário e rodapé.
+
+Outros arquivos:
+
 - `app/globals.css`: sistema visual (cores, tipografia, layout)
-- `components/`: seções (Hero, About, Thread, Journey, Manifesto, Waitlist) e o raminho botânico em SVG
 - `lib/gsap.ts`: registro dos plugins GSAP e rolagem suave até o formulário
 - `lib/lead.ts`: validação compartilhada entre o cliente e a API
 - `public/fotos/`: fotos da Tay

@@ -1,10 +1,7 @@
-export const INTERESTS = ["Identidade", "Fé", "Família", "Relacionamentos", "Carreira", "Negócios", "Propósito"] as const;
-
 export type LeadInput = {
   nome: string;
   email: string;
   whatsapp: string;
-  interesses: string[];
   consentimento: boolean;
 };
 

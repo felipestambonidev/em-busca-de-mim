@@ -2,9 +2,17 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { gsap, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { gsap, ScrollTrigger, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const VALUES = ["Conexão", "Aprendizado", "Crescimento"];
+const PILLARS = ["fé", "família", "relacionamentos", "carreira", "negócios"];
+const DESIRES = [
+  "cuidar de si",
+  "fortalecer seus relacionamentos",
+  "assumir o protagonismo da própria história",
+  "construir uma vida com mais equilíbrio, intencionalidade e propósito",
+];
+const NUMERALS = ["i", "ii", "iii", "iv"];
 
 export default function About() {
   const root = useRef<HTMLElement>(null);
@@ -15,6 +23,18 @@ export default function About() {
       const q = gsap.utils.selector(root);
 
       mm.add(MOTION_OK, () => {
+        const reveal = (targets: string, trigger: string) =>
+          gsap.from(q(targets), {
+            y: 26,
+            autoAlpha: 0,
+            stagger: 0.12,
+            duration: 1.3,
+            ease: "expo.out",
+            scrollTrigger: { trigger: q(trigger), start: "top 85%" },
+          });
+
+        reveal(".about__head > *", ".about__head");
+
         // O parágrafo principal "acende" palavra por palavra conforme a leitura avança.
         const lede = SplitText.create(q(".about__lede"), { type: "words" });
         gsap.fromTo(
@@ -28,22 +48,40 @@ export default function About() {
           },
         );
 
-        gsap.from(q(".about__head > *"), {
-          y: 28,
-          autoAlpha: 0,
-          stagger: 0.12,
-          duration: 1.3,
-          ease: "expo.out",
-          scrollTrigger: { trigger: q(".about__head"), start: "top 85%" },
+        reveal(".about__body, .about__values li", ".about__body");
+
+        // Um único fio costura todas as áreas da vida; cada uma ganha cor quando o fio a alcança.
+        const pillars = q(".about__pillar");
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: q(".about__pillars"), start: "top 80%", end: "bottom 55%", scrub: 0.8 },
+        });
+        tl.fromTo(q(".about__thread path"), { drawSVG: "0%" }, { drawSVG: "100%", duration: 1 }, 0);
+        pillars.forEach((el, i) => {
+          tl.fromTo(
+            el,
+            { color: "#E3D2C6", y: 10 },
+            { color: "#B38065", y: 0, duration: 0.2, ease: "power1.out" },
+            (i / pillars.length) * 0.85,
+          );
         });
 
-        gsap.from(q(".about__body, .about__values li"), {
-          y: 24,
-          autoAlpha: 0,
-          stagger: 0.1,
-          duration: 1.2,
-          ease: "expo.out",
-          scrollTrigger: { trigger: q(".about__body"), start: "top 88%" },
+        reveal(".about__belief-intro", ".about__belief");
+        reveal(".about__statement, .about__belief .body", ".about__statement");
+        reveal(".about__desires-title", ".about__desires");
+
+        gsap.set(q(".desire"), { autoAlpha: 0, y: 30 });
+        gsap.set(q(".desire__rule"), { scaleX: 0, transformOrigin: "left center" });
+        ScrollTrigger.batch(q(".desire"), {
+          start: "top 88%",
+          once: true,
+          onEnter: (items) => {
+            gsap.to(items, { autoAlpha: 1, y: 0, stagger: 0.14, duration: 1.2, ease: "expo.out" });
+            gsap.to(
+              items.map((el) => el.querySelector(".desire__rule")),
+              { scaleX: 1, stagger: 0.14, duration: 1.4, ease: "expo.inOut" },
+            );
+          },
         });
 
         gsap.fromTo(
@@ -62,7 +100,7 @@ export default function About() {
             scale: 1.04,
             yPercent: 4,
             ease: "none",
-            scrollTrigger: { trigger: q(".about__media"), start: "top bottom", end: "bottom top", scrub: true },
+            scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: true },
           },
         );
 
@@ -114,11 +152,49 @@ export default function About() {
         <ul className="about__values" aria-label="O que você encontra aqui">
           {VALUES.map((v, i) => (
             <li key={v}>
-              <span className="numeral">{["i", "ii", "iii"][i]}.</span>
+              <span className="numeral">{NUMERALS[i]}.</span>
               {v}
             </li>
           ))}
         </ul>
+
+        <div className="about__belief">
+          <p className="about__belief-intro">Aqui, acreditamos que</p>
+          <div className="about__pillars">
+            <p className="about__pillar-list">
+              {PILLARS.map((p, i) => (
+                <span key={p} className="about__pillar">
+                  {i === PILLARS.length - 1 ? `e ${p}` : `${p},`}
+                </span>
+              ))}
+            </p>
+            <svg className="about__thread" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M2 22 C 60 2, 110 38, 170 20 S 280 4, 340 22 S 450 38, 510 18 S 580 10, 598 20" />
+            </svg>
+          </div>
+          <p className="about__statement">
+            não precisam caminhar em <em>direções opostas.</em>
+          </p>
+          <p className="body">
+            É possível desenvolver sua liderança, empreender, construir resultados e realizar sonhos sem perder de vista
+            seus valores, sua essência e aquilo que realmente importa.
+          </p>
+        </div>
+
+        <div className="about__desires">
+          <h3 className="about__desires-title">
+            Uma jornada para mulheres que <em>desejam</em>
+          </h3>
+          <ol className="desires">
+            {DESIRES.map((d, i) => (
+              <li key={d} className="desire">
+                <span className="desire__rule" aria-hidden="true" />
+                <span className="numeral desire__num">{NUMERALS[i]}.</span>
+                <span className="desire__text">{d}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

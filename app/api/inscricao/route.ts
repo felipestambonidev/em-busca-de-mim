@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { INTERESTS, onlyDigits, validateLead, type LeadInput } from "@/lib/lead";
+import { onlyDigits, validateLead, type LeadInput } from "@/lib/lead";
 
 /**
  * Recebe inscrições da lista de espera.
@@ -19,14 +19,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const allowed = new Set<string>(INTERESTS);
   const input: LeadInput = {
     nome: String(body.nome ?? "").trim().slice(0, 120),
     email: String(body.email ?? "").trim().toLowerCase().slice(0, 160),
     whatsapp: onlyDigits(String(body.whatsapp ?? "")).slice(0, 11),
-    interesses: Array.isArray(body.interesses)
-      ? body.interesses.map(String).filter((i) => allowed.has(i))
-      : [],
     consentimento: body.consentimento === true,
   };
 

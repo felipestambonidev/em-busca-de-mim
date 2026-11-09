@@ -1,11 +1,7 @@
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Thread from "@/components/Thread";
-import Journey from "@/components/Journey";
-import Manifesto from "@/components/Manifesto";
-import Waitlist from "@/components/Waitlist";
-import SiteFooter from "@/components/SiteFooter";
+import Closing from "@/components/Closing";
 
 export default function Home() {
   return (
@@ -17,12 +13,8 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <Thread />
-        <Journey />
-        <Manifesto />
-        <Waitlist />
+        <Closing />
       </main>
-      <SiteFooter />
     </>
   );
 }
