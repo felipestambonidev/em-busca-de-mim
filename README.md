@@ -81,3 +81,15 @@ Outros arquivos:
 ## Página de feedback (`/feedback`)
 
 Formulário "Feedback de Impacto e Transformação". As respostas vão para `POST /api/feedback`, que as encaminha para `FEEDBACK_WEBHOOK_URL` (se definida) ou registra no log do servidor.
+
+## Banco de dados e painel (`/admin`)
+
+1. **Criar as tabelas:** no phpMyAdmin, selecione o banco, abra a aba **Importar** e envie `db/schema.sql`. O script cria `inscricoes`, `feedbacks` e `admins`, e já cadastra os admins felipe.stamboni@fitgestao.com e taynan.queiroz@fitgestao.com.
+2. **Variáveis de ambiente:** preencha `DB_*` e `ADMIN_SESSION_SECRET` (veja `.env.example`) em `.env.local` e na hospedagem.
+3. **Definir a senha de cada admin:**
+   ```bash
+   npm run admin:senha -- taynan.queiroz@fitgestao.com
+   ```
+4. Acesse `/admin`. O painel mostra os feedbacks com resumo e gráficos, a lista de cadastros e o botão para baixar cada planilha em CSV (abre no Excel).
+
+Com o banco configurado, cada envio é gravado nele; os webhooks continuam opcionais.

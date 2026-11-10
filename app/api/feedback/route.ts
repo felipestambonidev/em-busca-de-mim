@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { db, dbConfigured } from "@/lib/db";
 import { AREAS, CONEXAO, INDICACAO, isEmptyFeedback, type FeedbackInput } from "@/lib/feedback";
 
 /**
@@ -28,6 +29,21 @@ export async function POST(request: Request) {
   }
 
   const resposta = { ...input, origem: "feedback", criadoEm: new Date().toISOString() };
+  if (dbConfigured()) {
+    try {
+      await db().execute(
+        "INSERT INTO feedbacks (conexao, areas, impacto, indicacao, ajuda) VALUES (?, ?, ?, ?, ?)",
+        [input.conexao || null, input.areas.join("; ") || null, input.impacto, input.indicacao || null, input.ajuda || null],
+      );
+    } catch (err) {
+      console.error("[feedback] falha ao gravar no banco", err);
+      return NextResponse.json(
+        { ok: false, error: "Não conseguimos enviar agora. Tente novamente em instantes." },
+        { status: 502 },
+      );
+    }
+  }
+
   const webhook = process.env.FEEDBACK_WEBHOOK_URL;
   if (webhook) {
     try {
@@ -44,7 +60,7 @@ export async function POST(request: Request) {
         { status: 502 },
       );
     }
-  } else {
+  } else if (!dbConfigured()) {
     console.info("[feedback] nova resposta (defina FEEDBACK_WEBHOOK_URL para encaminhar):", resposta);
   }
   return NextResponse.json({ ok: true });

@@ -1,0 +1,43 @@
+.adm { max-width: 1200px; margin-inline: auto; padding: 1.5rem var(--gutter) 4rem; }
+.adm-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
+.adm-top__tag { font-family: var(--ff-sans); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute); margin-left: 0.6rem; }
+.adm-top__user { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--ink-soft); }
+.adm-logout { border: 0; cursor: pointer; font: inherit; font-size: 0.9rem; }
+.adm-tabs { display: flex; gap: 0.5rem; margin: 1.6rem 0; flex-wrap: wrap; }
+.adm-tab { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 0.65rem 1.2rem; font: 600 0.78rem var(--ff-sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); cursor: pointer; }
+.adm-tab.is-on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.adm-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.adm-stat { padding: 1.4rem; border-radius: 18px; background: var(--paper-deep); display: flex; flex-direction: column; gap: 0.3rem; }
+.adm-stat__n { font-family: var(--ff-display); font-size: 2.8rem; line-height: 1; color: var(--ink); }
+.adm-stat__l { font-size: 0.82rem; color: var(--ink-mute); }
+.adm-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.adm-card { padding: 1.3rem 1.4rem; border-radius: 18px; border: 1px solid rgba(179, 128, 101, 0.24); background: rgba(255, 251, 248, 0.85); }
+.adm-card__title { font-family: var(--ff-display); font-weight: 400; font-size: 1.35rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.9rem; }
+.adm-bars { display: flex; flex-direction: column; gap: 0.55rem; }
+.adm-bars li { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 2rem; align-items: center; gap: 0.7rem; font-size: 0.84rem; color: var(--ink-soft); }
+.adm-bars__track { height: 8px; border-radius: 99px; background: var(--paper-deep); overflow: hidden; }
+.adm-bars__fill { display: block; height: 100%; border-radius: inherit; background: var(--caramel); }
+.adm-bars__n { text-align: right; font-weight: 600; color: var(--ink); }
+.adm-toolbar { margin: 2rem 0 0.8rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--ink-soft); }
+.adm-table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: #fffbf8; }
+.adm-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.adm-table th { text-align: left; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.adm-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); color: var(--ink); white-space: nowrap; }
+.adm-table tr:last-child td { border-bottom: 0; }
+.adm-table a { color: var(--caramel-deep); }
+.adm-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.adm-answer header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--ink-mute); margin-bottom: 0.8rem; }
+.adm-pill { padding: 0.25rem 0.6rem; border-radius: 99px; background: var(--ink); color: var(--cream); font-weight: 600; }
+.adm-answer dl { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 0.45rem 0.8rem; margin: 0; font-size: 0.86rem; }
+.adm-answer dt { color: var(--ink-mute); }
+.adm-answer dd { margin: 0; color: var(--ink); }
+.adm-answer__text { white-space: pre-wrap; }
+.adm-empty { padding: 2rem; text-align: center; color: var(--ink-mute); }
+.adm-login { min-height: 100svh; display: grid; place-items: center; padding: var(--gutter); }
+.adm-login__card { width: min(100%, 400px); padding: 2.2rem; border-radius: 26px; background: #fffbf8; border: 1px solid rgba(179, 128, 101, 0.26); box-shadow: 0 40px 70px -50px rgba(23, 12, 10, 0.4); }
+.adm-login__title { margin: 1.2rem 0 1.4rem; font-family: var(--ff-display); font-weight: 400; font-size: 2.6rem; line-height: 1; text-transform: uppercase; }
+.adm-login__form { display: flex; flex-direction: column; gap: 1rem; }
+@media (max-width: 760px) {
+  .adm-stats, .adm-grid, .adm-answers { grid-template-columns: 1fr; }
+  .adm-bars li { grid-template-columns: minmax(0, 1fr) 5rem 1.6rem; }
+}

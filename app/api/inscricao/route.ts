@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { db, dbConfigured } from "@/lib/db";
 import { onlyDigits, validateLead, type LeadInput } from "@/lib/lead";
 
 /**
@@ -44,6 +45,23 @@ export async function POST(request: Request) {
     criadoEm: new Date().toISOString(),
   };
 
+  if (dbConfigured()) {
+    try {
+      const u = lead.utm as Record<string, string>;
+      await db().execute(
+        `INSERT INTO inscricoes (nome, email, whatsapp, consentimento, utm_source, utm_medium, utm_campaign, utm_content, utm_term)
+         VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?)`,
+        [lead.nome, lead.email, lead.whatsapp, u.utm_source ?? null, u.utm_medium ?? null, u.utm_campaign ?? null, u.utm_content ?? null, u.utm_term ?? null],
+      );
+    } catch (err) {
+      console.error("[inscricao] falha ao gravar no banco", err);
+      return NextResponse.json(
+        { ok: false, error: "Não conseguimos registrar sua inscrição agora. Tente novamente em instantes." },
+        { status: 502 },
+      );
+    }
+  }
+
   const webhook = process.env.INSCRICAO_WEBHOOK_URL;
   if (webhook) {
     try {
@@ -60,7 +78,7 @@ export async function POST(request: Request) {
         { status: 502 },
       );
     }
-  } else {
+  } else if (!dbConfigured()) {
     console.info("[inscricao] novo lead (defina INSCRICAO_WEBHOOK_URL para encaminhar):", lead);
   }
 
