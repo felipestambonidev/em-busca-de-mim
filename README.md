@@ -77,3 +77,7 @@ Outros arquivos:
 - Com `prefers-reduced-transparency`, o cabeçalho translúcido e o card do formulário ficam sólidos.
 - Com `prefers-contrast`, os textos secundários ficam mais escuros.
 - O formulário valida campo a campo com mensagens ligadas via `aria-describedby`.
+
+## Página de feedback (`/feedback`)
+
+Formulário "Feedback de Impacto e Transformação". As respostas vão para `POST /api/feedback`, que as encaminha para `FEEDBACK_WEBHOOK_URL` (se definida) ou registra no log do servidor.

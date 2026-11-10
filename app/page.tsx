@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#lista">
-        Pular para a inscrição
+        Pular para o formulário
       </a>
       <SiteHeader />
       <main>

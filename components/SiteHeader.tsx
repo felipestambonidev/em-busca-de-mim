@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import CtaButton from "./CtaButton";
 
 export default function SiteHeader() {
   const ref = useRef<HTMLElement>(null);
@@ -30,7 +29,6 @@ export default function SiteHeader() {
         </span>
         <span className="brand__by">com Tay Queiroz</span>
       </a>
-      <CtaButton variant="small">Entrar na lista</CtaButton>
     </header>
   );
 }

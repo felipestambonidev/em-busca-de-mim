@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
-import CtaButton from "./CtaButton";
 import Sprig from "./Sprig";
 
 export default function Closing() {
@@ -37,14 +36,6 @@ export default function Closing() {
             scrollTrigger: { trigger: q(".closing__sign"), start: "top 85%" },
           },
         );
-
-        gsap.from(q(".closing__cta"), {
-          y: 24,
-          autoAlpha: 0,
-          duration: 1.3,
-          ease: "expo.out",
-          scrollTrigger: { trigger: q(".closing__cta"), start: "top 92%" },
-        });
 
         gsap.fromTo(
           q(".closing__sprig path, .closing__sprig circle"),
@@ -102,9 +93,6 @@ export default function Closing() {
               apenas a própria história, mas também tudo aquilo que está ao seu redor.
             </p>
           </blockquote>
-          <div className="closing__cta">
-            <CtaButton variant="light">Quero entrar na lista</CtaButton>
-          </div>
         </div>
       </div>
 

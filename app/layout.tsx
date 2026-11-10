@@ -31,11 +31,11 @@ const scriptFallback = Mrs_Saint_Delafield({
 });
 
 const description =
-  "Uma jornada de desenvolvimento e transformação para mulheres que desejam fortalecer sua identidade, aprofundar sua fé e viver com propósito. Entre para a lista de espera.";
+  "Uma jornada de desenvolvimento e transformação para mulheres que desejam fortalecer sua identidade, aprofundar sua fé e viver com propósito.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "Em Busca de Mim · Lista de espera | Tay Queiroz",
+  title: "Em Busca de Mim | Tay Queiroz",
   description,
   openGraph: {
     title: "Em Busca de Mim — com Tay Queiroz",

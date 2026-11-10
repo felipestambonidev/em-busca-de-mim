@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRef } from "react";
 import { gsap, ScrollTrigger, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
 
-const VALUES = ["Conexão", "Aprendizado", "Crescimento"];
 const PILLARS = ["fé", "família", "relacionamentos", "carreira", "negócios"];
 const DESIRES = [
   "cuidar de si",
@@ -48,7 +47,7 @@ export default function About() {
           },
         );
 
-        reveal(".about__body, .about__values li", ".about__body");
+        reveal(".about__body", ".about__body");
 
         // Um único fio costura todas as áreas da vida; cada uma ganha cor quando o fio a alcança.
         const pillars = q(".about__pillar");
@@ -149,14 +148,6 @@ export default function About() {
           e profissional.
         </p>
 
-        <ul className="about__values" aria-label="O que você encontra aqui">
-          {VALUES.map((v, i) => (
-            <li key={v}>
-              <span className="numeral">{NUMERALS[i]}.</span>
-              {v}
-            </li>
-          ))}
-        </ul>
 
         <div className="about__belief">
           <p className="about__belief-intro">Aqui, acreditamos que</p>

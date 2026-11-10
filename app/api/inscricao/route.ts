@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { onlyDigits, validateLead, type LeadInput } from "@/lib/lead";
 
 /**
- * Recebe inscrições da lista de espera.
+ * Recebe inscrições do formulário da página inicial.
  * Se INSCRICAO_WEBHOOK_URL estiver definida (Google Apps Script, Make, Zapier, n8n, RD Station…),
  * o lead é encaminhado para lá em JSON. Caso contrário, é registrado no log do servidor.
  */
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         .filter(([k]) => k.startsWith("utm_"))
         .map(([k, v]) => [k, String(v).slice(0, 200)]),
     ),
-    origem: "lista-de-espera",
+    origem: "pagina-inicial",
     criadoEm: new Date().toISOString(),
   };
 

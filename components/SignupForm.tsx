@@ -117,7 +117,7 @@ export default function SignupForm() {
       {status !== "done" ? (
         <form className="signup__form" onSubmit={onSubmit} noValidate aria-labelledby="signup-title">
           <p id="signup-title" className="signup__title">
-            Entre para a <em>lista de espera</em>
+            Quero fazer <em>parte</em>
           </p>
 
           <div className={`field ${errors.nome ? "has-error" : ""}`}>
@@ -205,7 +205,7 @@ export default function SignupForm() {
           )}
 
           <button type="submit" className="btn btn--solid btn--block" disabled={status !== "idle"}>
-            <span className="btn__label">{status !== "idle" ? "Guardando seu lugar…" : "Quero entrar na lista"}</span>
+            <span className="btn__label">{status !== "idle" ? "Enviando…" : "Quero fazer parte"}</span>
             <svg className="btn__arrow" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h13M13 6.5 18.5 12 13 17.5" />
             </svg>
@@ -216,10 +216,9 @@ export default function SignupForm() {
         <div className="signup__thanks" role="status" tabIndex={-1}>
           <Sprig className="thanks__sprig" />
           <p className="thanks__reveal script thanks__hello">Que alegria{firstName ? `, ${firstName}` : ""}!</p>
-          <p className="thanks__reveal thanks__title">Seu nome está na lista.</p>
+          <p className="thanks__reveal thanks__title">Recebemos seus dados.</p>
           <p className="thanks__reveal body">
-            Assim que as inscrições do Em Busca de Mim abrirem, você será uma das primeiras a saber. Até lá, cuide de
-            você.
+            Em breve entraremos em contato com novidades sobre o Em Busca de Mim. Até lá, cuide de você.
           </p>
         </div>
       )}

@@ -68,7 +68,7 @@ export default function Hero() {
       <div className="hero__text">
         <p className="hero__eyebrow eyebrow">
           <span className="dot" aria-hidden="true" />
-          Lista de espera aberta
+          Uma jornada com Tay Queiroz
         </p>
 
         <h1 id="hero-title" className="hero__title">
