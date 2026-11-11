@@ -2,6 +2,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Closing from "@/components/Closing";
+import SpotifyPlayer from "@/components/SpotifyPlayer";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <About />
         <Closing />
       </main>
+      <SpotifyPlayer />
     </>
   );
 }
