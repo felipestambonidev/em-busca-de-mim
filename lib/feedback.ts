@@ -1,23 +1,46 @@
-export const CONEXAO = ["Mentoria individual", "Palestras e workshops", "Cursos online", "Projetos sociais", "Outros"];
+export const CONEXAO = [
+  "Mentoria individual",
+  "Palestras e workshops",
+  "Cursos online",
+  "Projetos sociais",
+  "Rede Social",
+  "Família",
+  "Outros",
+];
 export const AREAS = [
-  "Autoconfiança e autoestima",
-  "Carreira e vida profissional",
-  "Relacionamentos pessoais",
-  "Gestão financeira",
-  "Saúde e bem-estar emocional",
+  "Emocional",
+  "Espiritual",
+  "Conjugal",
+  "Filhos",
+  "Família",
+  "Parentes",
+  "Saúde",
+  "Financeiro",
+  "Profissional",
+  "Intelectual",
+  "Servir",
+  "Social/Networking",
 ];
 export const INDICACAO = ["Com certeza indicaria", "Talvez indicaria", "Não indicaria"];
 
 export type FeedbackInput = {
-  conexao: string;
+  conexao: string[];
   areas: string[];
+  momento: string;
   impacto: number | null;
   indicacao: string;
   ajuda: string;
 };
 
-export const EMPTY_FEEDBACK: FeedbackInput = { conexao: "", areas: [], impacto: null, indicacao: "", ajuda: "" };
+export const EMPTY_FEEDBACK: FeedbackInput = {
+  conexao: [],
+  areas: [],
+  momento: "",
+  impacto: null,
+  indicacao: "",
+  ajuda: "",
+};
 
 export function isEmptyFeedback(f: FeedbackInput) {
-  return !f.conexao && !f.areas.length && !f.impacto && !f.indicacao && !f.ajuda.trim();
+  return !f.conexao.length && !f.areas.length && !f.momento.trim() && !f.impacto && !f.indicacao && !f.ajuda.trim();
 }

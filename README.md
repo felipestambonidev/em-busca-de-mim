@@ -90,6 +90,7 @@ Formulário "Feedback de Impacto e Transformação". As respostas vão para `POS
    ```bash
    npm run admin:senha -- taynan.queiroz@fitgestao.com
    ```
+   > Já tinha importado o `schema.sql` antes de 12/11/2026? Importe também `db/migrations/002_feedback_v2.sql` (uma vez só) para o formulário novo de feedback.
 4. Acesse `/admin`. O painel mostra os feedbacks com resumo e gráficos, a lista de cadastros e o botão para baixar cada planilha em CSV (abre no Excel).
 
 Com o banco configurado, cada envio é gravado nele; os webhooks continuam opcionais.

@@ -14,8 +14,16 @@ export async function GET(request: Request) {
   let rows: unknown[][];
   if (tipo === "feedbacks") {
     const data = await listFeedbacks();
-    header = ["Data", "Como nos conectamos", "Áreas transformadas", "Impacto (1-5)", "Indicaria", "Onde se sente perdida"];
-    rows = data.map((f) => [f.criado_em, f.conexao, f.areas, f.impacto, f.indicacao, f.ajuda]);
+    header = [
+      "Data",
+      "Como nos conhecemos",
+      "Áreas transformadas",
+      "Momento da transformação",
+      "Impacto (1-5)",
+      "Indicaria",
+      "Onde se sente perdida",
+    ];
+    rows = data.map((f) => [f.criado_em, f.conexao, f.areas, f.momento, f.impacto, f.indicacao, f.ajuda]);
   } else {
     const data = await listInscricoes();
     header = ["Data", "Nome", "E-mail", "WhatsApp", "Origem (utm_source)", "Campanha"];

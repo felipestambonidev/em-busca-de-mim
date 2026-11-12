@@ -16,10 +16,13 @@ export async function POST(request: Request) {
   if (typeof body.website === "string" && body.website.trim() !== "") return NextResponse.json({ ok: true });
 
   const pick = (v: unknown, list: string[]) => (typeof v === "string" && list.includes(v) ? v : "");
+  const pickMany = (v: unknown, list: string[]) =>
+    Array.isArray(v) ? [...new Set(v.filter((a): a is string => typeof a === "string" && list.includes(a)))] : [];
   const impacto = Number(body.impacto);
   const input: FeedbackInput = {
-    conexao: pick(body.conexao, CONEXAO),
-    areas: Array.isArray(body.areas) ? body.areas.filter((a): a is string => typeof a === "string" && AREAS.includes(a)) : [],
+    conexao: pickMany(body.conexao, CONEXAO),
+    areas: pickMany(body.areas, AREAS),
+    momento: String(body.momento ?? "").trim().slice(0, 4000),
     impacto: Number.isInteger(impacto) && impacto >= 1 && impacto <= 5 ? impacto : null,
     indicacao: pick(body.indicacao, INDICACAO),
     ajuda: String(body.ajuda ?? "").trim().slice(0, 4000),
@@ -32,8 +35,15 @@ export async function POST(request: Request) {
   if (dbConfigured()) {
     try {
       await db().execute(
-        "INSERT INTO feedbacks (conexao, areas, impacto, indicacao, ajuda) VALUES (?, ?, ?, ?, ?)",
-        [input.conexao || null, input.areas.join("; ") || null, input.impacto, input.indicacao || null, input.ajuda || null],
+        "INSERT INTO feedbacks (conexao, areas, momento, impacto, indicacao, ajuda) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          input.conexao.join("; ") || null,
+          input.areas.join("; ") || null,
+          input.momento || null,
+          input.impacto,
+          input.indicacao || null,
+          input.ajuda || null,
+        ],
       );
     } catch (err) {
       console.error("[feedback] falha ao gravar no banco", err);

@@ -10,8 +10,8 @@ export default function FeedbackForm() {
   const [error, setError] = useState("");
 
   const set = <K extends keyof FeedbackInput>(k: K, v: FeedbackInput[K]) => setData((d) => ({ ...d, [k]: v }));
-  const toggleArea = (a: string) =>
-    set("areas", data.areas.includes(a) ? data.areas.filter((x) => x !== a) : [...data.areas, a]);
+  const toggle = (k: "conexao" | "areas", v: string) =>
+    set(k, data[k].includes(v) ? data[k].filter((x) => x !== v) : [...data[k], v]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,11 +53,14 @@ export default function FeedbackForm() {
   return (
     <form className="fb__form" onSubmit={onSubmit} noValidate>
       <fieldset className="fb-card">
-        <legend className="fb-q">De que forma nos conectamos inicialmente?</legend>
-        <div className="fb-options">
+        <legend className="fb-q">
+          Como nos conhecemos?
+          <span className="fb-hint">Marque quantas quiser.</span>
+        </legend>
+        <div className="fb-options fb-options--grid">
           {CONEXAO.map((o) => (
-            <label key={o} className="fb-option">
-              <input type="radio" name="conexao" checked={data.conexao === o} onChange={() => set("conexao", o)} />
+            <label key={o} className="fb-option fb-option--check">
+              <input type="checkbox" checked={data.conexao.includes(o)} onChange={() => toggle("conexao", o)} />
               <span>{o}</span>
             </label>
           ))}
@@ -66,23 +69,37 @@ export default function FeedbackForm() {
 
       <fieldset className="fb-card">
         <legend className="fb-q">
-          Em quais áreas da sua vida você percebeu maior transformação?
+          Em quais áreas da sua vida a nossa conexão gerou maior transformação?
           <span className="fb-hint">Marque quantas quiser.</span>
         </legend>
-        <div className="fb-options">
+        <div className="fb-options fb-options--grid">
           {AREAS.map((o) => (
             <label key={o} className="fb-option fb-option--check">
-              <input type="checkbox" checked={data.areas.includes(o)} onChange={() => toggleArea(o)} />
+              <input type="checkbox" checked={data.areas.includes(o)} onChange={() => toggle("areas", o)} />
               <span>{o}</span>
             </label>
           ))}
         </div>
       </fieldset>
 
+      <div className="fb-card">
+        <label className="fb-q" htmlFor="fb-momento">
+          Descreva um momento ou situação específica em que você viveu essa transformação.
+        </label>
+        <textarea
+          id="fb-momento"
+          className="fb-textarea"
+          rows={5}
+          placeholder="Conte do seu jeito, com calma."
+          value={data.momento}
+          onChange={(e) => set("momento", e.target.value)}
+        />
+      </div>
+
       <fieldset className="fb-card">
-        <legend className="fb-q">Como você avalia o impacto geral dessa experiência em sua trajetória?</legend>
+        <legend className="fb-q">Como você avalia o impacto geral dessa transformação em sua vida?</legend>
         <div className="fb-scale">
-          <span className="fb-scale__end">Baixo impacto</span>
+          <span className="fb-scale__end">Baixa transformação</span>
           <div className="fb-scale__dots">
             {[1, 2, 3, 4, 5].map((n) => (
               <label key={n} className="fb-scale__item">
@@ -102,7 +119,7 @@ export default function FeedbackForm() {
       </fieldset>
 
       <fieldset className="fb-card">
-        <legend className="fb-q">Qual é a probabilidade de você indicar essa experiência para outras mulheres?</legend>
+        <legend className="fb-q">Qual a probabilidade de você me indicar para outras mulheres?</legend>
         <div className="fb-options">
           {INDICACAO.map((o) => (
             <label key={o} className="fb-option">

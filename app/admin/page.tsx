@@ -116,13 +116,13 @@ async function Dashboard() {
         </div>
       </div>
       <div className="adm-grid">
-        <Bars title="Como nos conectamos" data={count(feedbacks, (f) => f.conexao)} order={CONEXAO} />
+        <Bars title="Como nos conhecemos" data={count(feedbacks, (f) => (f.conexao ? f.conexao.split("; ") : null))} order={CONEXAO} />
         <Bars
           title="Áreas com maior transformação"
           data={count(feedbacks, (f) => (f.areas ? f.areas.split("; ") : null))}
           order={AREAS}
         />
-        <Bars title="Impacto" data={count(feedbacks, (f) => (f.impacto ? String(f.impacto) : null))} order={["5", "4", "3", "2", "1"]} />
+        <Bars title="Impacto da transformação" data={count(feedbacks, (f) => (f.impacto ? String(f.impacto) : null))} order={["5", "4", "3", "2", "1"]} />
         <Bars title="Indicaria para outras mulheres" data={count(feedbacks, (f) => f.indicacao)} order={INDICACAO} />
       </div>
       <div className="adm-toolbar">
@@ -139,10 +139,12 @@ async function Dashboard() {
               {f.impacto && <span className="adm-pill">Impacto {f.impacto}/5</span>}
             </header>
             <dl>
-              <dt>Conexão</dt>
+              <dt>Como nos conhecemos</dt>
               <dd>{f.conexao ?? "–"}</dd>
               <dt>Áreas</dt>
               <dd>{f.areas ?? "–"}</dd>
+              <dt>Momento</dt>
+              <dd className="adm-answer__text">{f.momento ?? "–"}</dd>
               <dt>Indicaria</dt>
               <dd>{f.indicacao ?? "–"}</dd>
               <dt>Onde se sente perdida</dt>

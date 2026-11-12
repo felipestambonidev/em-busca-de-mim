@@ -24,8 +24,9 @@ CREATE TABLE IF NOT EXISTS inscricoes (
 -- Respostas da página /feedback
 CREATE TABLE IF NOT EXISTS feedbacks (
   id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  conexao    VARCHAR(60)  NULL,
+  conexao    TEXT         NULL COMMENT 'Como nos conhecemos, separado por "; "',
   areas      TEXT         NULL COMMENT 'Áreas separadas por "; "',
+  momento    TEXT         NULL COMMENT 'Momento em que viveu a transformação',
   impacto    TINYINT UNSIGNED NULL COMMENT '1 a 5',
   indicacao  VARCHAR(40)  NULL,
   ajuda      TEXT         NULL,

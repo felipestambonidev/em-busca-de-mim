@@ -122,9 +122,6 @@ export default function About() {
             quality={82}
           />
         </div>
-        <figcaption className="about__caption">
-          <span className="numeral">i.</span> Um espaço para olhar para a sua história
-        </figcaption>
       </figure>
 
       <div className="about__content">

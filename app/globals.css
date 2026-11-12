@@ -807,14 +807,6 @@ a {
   object-position: 50% 30%;
 }
 
-.about__caption {
-  margin-top: 1.1rem;
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-  font-size: var(--fs-small);
-  color: var(--ink-mute);
-}
 
 .about__content {
   padding-top: clamp(0rem, 4vw, 4rem);
@@ -1217,6 +1209,18 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+}
+
+.fb-options--grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem 0.6rem;
+}
+
+@media (max-width: 560px) {
+  .fb-options--grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .fb-option {

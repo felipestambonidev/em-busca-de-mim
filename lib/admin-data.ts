@@ -16,6 +16,7 @@ export type Feedback = {
   id: number;
   conexao: string | null;
   areas: string | null;
+  momento: string | null;
   impacto: number | null;
   indicacao: string | null;
   ajuda: string | null;
@@ -31,7 +32,7 @@ export async function listInscricoes() {
 
 export async function listFeedbacks() {
   const [rows] = await db().query<RowDataPacket[]>(
-    "SELECT id, conexao, areas, impacto, indicacao, ajuda, criado_em FROM feedbacks ORDER BY criado_em DESC LIMIT 5000",
+    "SELECT id, conexao, areas, momento, impacto, indicacao, ajuda, criado_em FROM feedbacks ORDER BY criado_em DESC LIMIT 5000",
   );
   return rows as Feedback[];
 }
