@@ -22,7 +22,8 @@ export function scrollToSection(id: string) {
   gsap.to(window, {
     duration: reduce ? 0 : 1.5,
     ease: "power3.inOut",
-    scrollTo: { y: el, offsetY: 0, autoKill: true },
+    // Desconta o header fixo para o topo do formulário não ficar escondido.
+    scrollTo: { y: el, offsetY: (document.querySelector(".site-header")?.clientHeight ?? 0) + 16, autoKill: true },
     overwrite: "auto",
     onComplete: () => {
       const field = el.querySelector<HTMLInputElement>("input:not([type=hidden]):not([tabindex='-1'])");

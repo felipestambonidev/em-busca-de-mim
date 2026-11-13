@@ -1,0 +1,438 @@
+/* ==========================================================================
+   Login no header + seções 02 (método), 03 (formato) e 04 (mentora)
+   ========================================================================== */
+
+/* Header — acesso à plataforma */
+
+.header-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.15rem 0.7rem 0.95rem;
+  border: 1px solid rgba(23, 12, 10, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 251, 248, 0.55);
+  color: var(--ink);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.45s var(--ease-out), color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header-login:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+.header-login svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.header-login__short {
+  display: none;
+}
+
+/* 02 — O método (árvore 3D) */
+
+.method__head {
+  max-width: 62rem;
+}
+
+.method__head .h2 {
+  margin-top: 1.4rem;
+  max-width: 16ch;
+}
+
+.method__verse {
+  margin-top: clamp(2.2rem, 4vw, 3.2rem);
+  padding-left: clamp(1.1rem, 2.4vw, 1.8rem);
+  border-left: 1px solid var(--caramel);
+  max-width: 46rem;
+}
+
+.method__verse p {
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.08rem, 0.95rem + 0.5vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.method__verse cite {
+  display: block;
+  margin-top: 0.9rem;
+  font-style: normal;
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--caramel-deep);
+}
+
+.method__intro {
+  margin-top: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.method__grid {
+  position: relative;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.method__stage {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+  height: calc(100svh - var(--header-h) - 3rem);
+  max-height: 760px;
+}
+
+.method__canvas {
+  position: relative;
+  height: 100%;
+  border-radius: 280px 280px 28px 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 50% 42%, rgba(226, 194, 127, 0.22), transparent 70%),
+    linear-gradient(180deg, var(--paper-deep), var(--paper) 78%);
+  box-shadow: 0 0 0 1px rgba(179, 128, 101, 0.18) inset;
+}
+
+.method__canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.method__canvas.is-failed canvas {
+  display: none;
+}
+
+.method__now {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translateX(-50%);
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255, 251, 248, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.method__now .numeral {
+  font-size: 1em;
+  margin-right: 0.2em;
+}
+
+.method__list {
+  padding-bottom: 18svh;
+}
+
+.module {
+  position: relative;
+  min-height: 72svh;
+  padding: clamp(2.2rem, 5vh, 3.5rem) 0;
+  border-top: 1px solid var(--line);
+  opacity: 0.55;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.module:last-child {
+  min-height: 60svh;
+}
+
+.module.is-active {
+  opacity: 1;
+}
+
+.module__num {
+  font-size: 1.35rem;
+}
+
+.module__title {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 1.9rem + 2.6vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.module__sub {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--caramel-deep);
+}
+
+.module__lead {
+  margin-top: 1.3rem;
+  font-family: var(--ff-script);
+  font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.7rem);
+  line-height: 1.15;
+  color: var(--caramel);
+}
+
+.module__text {
+  margin-top: 0.9rem;
+}
+
+.module__more {
+  margin-top: 1.6rem;
+  max-width: 60ch;
+}
+
+.module__more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 0.4rem 0;
+}
+
+.module__more summary::-webkit-details-marker {
+  display: none;
+}
+
+.module__plus {
+  position: relative;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid rgba(179, 128, 101, 0.5);
+  border-radius: 50%;
+}
+
+.module__plus::before,
+.module__plus::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0.6rem;
+  height: 1px;
+  background: var(--caramel-deep);
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.module__plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.module__more[open] .module__plus::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.module__focus {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.module__topics {
+  margin-top: 1.1rem;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.module__topics li {
+  display: grid;
+  gap: 0.15rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--caramel-soft);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.module__topics strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* 03 — O formato */
+
+.format {
+  background: var(--paper-deep);
+}
+
+.format__inner {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: var(--section-y) var(--gutter);
+}
+
+.format__head .h2 {
+  margin-top: 1.4rem;
+  max-width: 14ch;
+}
+
+.format__intro {
+  margin-top: clamp(1.4rem, 3vw, 2rem);
+}
+
+.format__list {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.format__item {
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(23, 12, 10, 0.18);
+}
+
+.format__num {
+  font-size: 1.35rem;
+}
+
+.format__title {
+  margin: 0.8rem 0;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 1.35rem + 1.2vw, 2.3rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* 04 — Sua mentora */
+
+.mentor {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2.5rem, 7vw, 7.5rem);
+  align-items: center;
+}
+
+.mentor__frame {
+  position: relative;
+  aspect-ratio: 4 / 5.4;
+  overflow: hidden;
+  border-radius: 220px 220px 24px 24px;
+  background: var(--paper-warm);
+}
+
+.mentor__img {
+  object-fit: cover;
+  object-position: 50% 25%;
+}
+
+.mentor__text .h2 {
+  margin-top: 1.4rem;
+}
+
+.mentor__lede {
+  margin-top: clamp(1.8rem, 4vw, 2.6rem);
+  max-width: 32ch;
+  text-wrap: pretty;
+}
+
+.mentor__text .body {
+  margin-top: 1.3rem;
+}
+
+.mentor__sign {
+  margin-top: 1.8rem;
+  font-size: clamp(2.4rem, 1.9rem + 1.8vw, 3.4rem);
+  color: var(--caramel);
+}
+
+@media (max-width: 900px) {
+  .method__grid,
+  .mentor {
+    grid-template-columns: 1fr;
+  }
+
+  /* No celular a árvore fica fixa no topo e os módulos passam por baixo dela. */
+  .method__stage {
+    top: var(--header-h);
+    z-index: 2;
+    height: 46svh;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0.5rem var(--gutter) 0.9rem;
+    background: var(--paper);
+    box-shadow: 0 14px 18px -16px rgba(23, 12, 10, 0.25);
+  }
+
+  .method__canvas {
+    border-radius: 200px 200px 22px 22px;
+  }
+
+  .method__now {
+    bottom: 1.7rem;
+    font-size: 1rem;
+  }
+
+  .module,
+  .module:last-child {
+    min-height: 62svh;
+  }
+
+  .format__list {
+    grid-template-columns: 1fr;
+  }
+
+  .mentor__media {
+    width: min(82%, 420px);
+  }
+}
+
+@media (max-width: 560px) {
+  .header-login {
+    padding: 0.62rem 0.9rem 0.62rem 0.75rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+  }
+
+  .header-login__long {
+    display: none;
+  }
+
+  .header-login__short {
+    display: inline;
+  }
+
+  .method__verse p {
+    font-size: 1.02rem;
+  }
+}

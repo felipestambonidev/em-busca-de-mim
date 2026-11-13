@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { gsap, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { gsap, SplitText, useGSAP, MOTION_OK, scrollToSection } from "@/lib/gsap";
 import Sprig from "./Sprig";
 
 export default function Closing() {
@@ -93,6 +93,14 @@ export default function Closing() {
               apenas a própria história, mas também tudo aquilo que está ao seu redor.
             </p>
           </blockquote>
+          <div className="closing__cta">
+            <button type="button" className="btn btn--light" onClick={() => scrollToSection("lista")}>
+              <span className="btn__label">Quero iniciar minha jornada</span>
+              <svg className="btn__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h13M13 6.5 18.5 12 13 17.5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 

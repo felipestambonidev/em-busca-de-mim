@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Montserrat, Mrs_Saint_Delafield } from "next/font/google";
 import "./fonts.css";
 import "./globals.css";
+import "./sections.css";
 
 /*
  * Fontes da marca:
