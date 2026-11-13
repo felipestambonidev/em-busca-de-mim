@@ -29,6 +29,14 @@ export default function SiteHeader() {
         </span>
         <span className="brand__by">com Tay Queiroz</span>
       </a>
+      <a href="https://play.embuscademim.com.br/login?callbackUrl=%2F" className="header-login">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.6" />
+          <path d="M4.8 19.5c1.2-3.3 4-5 7.2-5s6 1.7 7.2 5" />
+        </svg>
+        <span className="header-login__long">Entrar na plataforma</span>
+        <span className="header-login__short">Entrar</span>
+      </a>
     </header>
   );
 }
