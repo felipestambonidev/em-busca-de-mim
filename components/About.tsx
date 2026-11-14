@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { gsap, ScrollTrigger, SplitText, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
+import SectionCta from "./SectionCta";
 
 const PILLARS = ["fé", "família", "relacionamentos", "carreira", "negócios"];
 const DESIRES = [
@@ -34,20 +35,7 @@ export default function About() {
 
         reveal(".about__head > *", ".about__head");
 
-        // O parágrafo principal "acende" palavra por palavra conforme a leitura avança.
-        const lede = SplitText.create(q(".about__lede"), { type: "words" });
-        gsap.fromTo(
-          lede.words,
-          { opacity: 0.14 },
-          {
-            opacity: 1,
-            stagger: 0.08,
-            ease: "none",
-            scrollTrigger: { trigger: q(".about__lede"), start: "top 82%", end: "bottom 48%", scrub: 0.6 },
-          },
-        );
-
-        reveal(".about__body", ".about__body");
+        reveal(".about__lede, .about__body", ".about__lede");
 
         // Um único fio costura todas as áreas da vida; cada uma ganha cor quando o fio a alcança.
         const pillars = q(".about__pillar");
@@ -103,7 +91,6 @@ export default function About() {
           },
         );
 
-        return () => lede.revert();
       });
     },
     { scope: root },
@@ -183,6 +170,8 @@ export default function About() {
             ))}
           </ol>
         </div>
+
+        <SectionCta label="Quero fazer parte" />
       </div>
     </section>
   );

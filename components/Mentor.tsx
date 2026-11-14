@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import SectionCta from "./SectionCta";
 
 export default function Mentor() {
   const root = useRef<HTMLElement>(null);
@@ -69,6 +70,7 @@ export default function Mentor() {
           sobreviva aos seus dias, mas se torne uma mulher sábia, livre e dona da sua própria história.
         </p>
         <p className="mentor__sign script">Tay Queiroz</p>
+        <SectionCta label="Quero caminhar com a Tay" />
       </div>
     </section>
   );

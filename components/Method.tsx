@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 import type { TreeScene } from "@/lib/tree3d";
+import SectionCta from "./SectionCta";
 
 type Module = {
   numeral: string;
@@ -194,28 +195,31 @@ export default function Method() {
       const mm = gsap.matchMedia();
 
       // Cada etapa ocupa um quarto do crescimento: a árvore cresce de baixo para cima conforme a leitura.
-      const cards = q<HTMLElement>(".module");      cards.forEach((card, i) => {
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 62%",
-          // A última etapa termina antes, para a árvore completa ficar um tempo na tela.
-          end: i === cards.length - 1 ? "bottom 85%" : "bottom 62%",
-          onToggle: (self) => self.isActive && setActive(i),
-          onUpdate: (self) => {
-            // Em saltos grandes de rolagem, ignora a atualização final de cards que já saíram.
-            if (!self.isActive) return;
-            setActive(i);
-            const p = (i + self.progress) / cards.length;
-            progressRef.current = p;
-            treeRef.current?.setProgress(p);
-          },
-          onLeave: () => {
-            if (i === cards.length - 1) {
-              progressRef.current = 1;
-              treeRef.current?.setProgress(1);
-            }
-          },
+      // A etapa é calculada pela posição real dos cards a cada rolagem (robusto a saltos e mudanças de layout).
+      const cards = q<HTMLElement>(".module");
+      const sync = () => {
+        const vh = window.innerHeight;
+        const line = vh * 0.62;
+        let i = 0;
+        cards.forEach((c, k) => {
+          if (c.getBoundingClientRect().top <= line) i = k;
         });
+        const r = cards[i].getBoundingClientRect();
+        // A última etapa termina antes, para a árvore completa ficar um tempo na tela.
+        const span = i === cards.length - 1 ? r.height - vh * 0.23 : r.height;
+        const local = Math.min(1, Math.max(0, (line - r.top) / Math.max(1, span)));
+        const p = (i + local) / cards.length;
+        setActive(i);
+        progressRef.current = p;
+        treeRef.current?.setProgress(p);
+      };
+      ScrollTrigger.create({
+        trigger: root.current,
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: sync,
+        onRefresh: sync,
+        onToggle: sync,
       });
 
       mm.add(MOTION_OK, () => {
@@ -262,39 +266,40 @@ export default function Method() {
           <div className={`method__canvas${failed ? " is-failed" : ""}`}>
             <canvas ref={canvasRef} />
           </div>
-          <p className="method__now">
-            <span className="numeral">{current.numeral}.</span> {current.name}
-          </p>
+          <p className="method__now">{current.name}</p>
         </div>
 
-        <ol className="method__list">
-          {MODULES.map((m, i) => (
-            <li key={m.name} className={`module${i === active ? " is-active" : ""}`}>
-              <p className="module__num numeral">{m.numeral}.</p>
-              <h3 className="module__title">
-                {m.name}
-                <span className="module__sub">{m.sub}</span>
-              </h3>
-              <p className="module__lead">{m.lead}</p>
-              <p className="module__text body">{m.text}</p>
-              <details className="module__more" onToggle={() => ScrollTrigger.refresh()}>
-                <summary>
-                  Ver os {m.topics.length} temas desta etapa
-                  <span className="module__plus" aria-hidden="true" />
-                </summary>
-                <p className="module__focus">{m.focus}</p>
-                <ul className="module__topics">
-                  {m.topics.map(([title, desc]) => (
-                    <li key={title}>
-                      <strong>{title}</strong>
-                      <span>{desc}</span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            </li>
-          ))}
-        </ol>
+        <div className="method__col">
+          <ol className="method__list">
+            {MODULES.map((m, i) => (
+              <li key={m.name} className={`module${i === active ? " is-active" : ""}`}>
+                <p className="module__num numeral">{m.numeral}.</p>
+                <h3 className="module__title">
+                  {m.name}
+                  <span className="module__sub">{m.sub}</span>
+                </h3>
+                <p className="module__lead">{m.lead}</p>
+                <p className="module__text body">{m.text}</p>
+                <details className="module__more" onToggle={() => ScrollTrigger.refresh()}>
+                  <summary>
+                    Ver os {m.topics.length} temas desta etapa
+                    <span className="module__plus" aria-hidden="true" />
+                  </summary>
+                  <p className="module__focus">{m.focus}</p>
+                  <ul className="module__topics">
+                    {m.topics.map(([title, desc]) => (
+                      <li key={title}>
+                        <strong>{title}</strong>
+                        <span>{desc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </li>
+            ))}
+          </ol>
+          <SectionCta label="Quero começar pelas raízes" className="method__cta" />
+        </div>
       </div>
     </section>
   );

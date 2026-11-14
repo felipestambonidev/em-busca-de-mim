@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import SectionCta from "./SectionCta";
 
 const ITEMS = [
   {
@@ -71,6 +72,8 @@ export default function Format() {
             </li>
           ))}
         </ul>
+
+        <SectionCta label="Quero fazer parte da mentoria" />
       </div>
     </section>
   );

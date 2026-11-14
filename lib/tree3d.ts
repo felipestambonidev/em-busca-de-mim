@@ -72,18 +72,22 @@ function buildTree(rand: () => number) {
     const { curve, len: L, g1 } = addTube(tree, [p0, mid, end], r, r1, g0, depth < 2 ? 8 : depth < 4 ? 6 : 4);
     maxTree = Math.max(maxTree, g1);
 
+    // Folhas em volta dos galhos finos (não só em cima deles), para a copa ficar cheia.
     if (depth >= 3) {
-      const n = depth === MAXD ? 10 : 4;
+      const n = depth === MAXD ? 16 : depth === 4 ? 9 : 6;
+      const spread = depth === MAXD ? 0.42 : 0.3;
       for (let i = 0; i < n; i++) {
-        const t = 0.3 + 0.7 * rand();
-        leaves.push({ p: curve.getPointAt(t), g: g0 + t * L });
+        const t = 0.2 + 0.8 * rand();
+        leaves.push({ p: curve.getPointAt(t).add(rndVec().multiplyScalar(spread * 2)), g: g0 + t * L });
       }
-      if (depth === MAXD && rand() < 0.2) fruits.push({ p: end.clone().add(V(0, -0.08, 0)), g: g1 });
+      if (depth >= 4 && rand() < 0.5) {
+        fruits.push({ p: end.clone().add(rndVec().multiplyScalar(0.4)).add(V(0, -0.14, 0)), g: g1 });
+      }
     }
     if (depth >= MAXD) return;
 
     const d0 = end.clone().sub(mid).normalize();
-    const n = rand() < 0.35 ? 3 : 2;
+    const n = rand() < 0.5 ? 3 : 2;
     for (let i = 0; i < n; i++) {
       const out = V(end.x, (end.y - 2.6) * 0.5, end.z).normalize();
       const d = turn(d0, 0.35 + rand() * 0.5).addScaledVector(out, 0.55).addScaledVector(UP, 0.06).normalize();
@@ -136,6 +140,12 @@ function buildTree(rand: () => number) {
     root(pts[0], V(Math.cos(a0), -0.5, Math.sin(a0)).normalize(), 0.85, 0.1, 0, 0);
   }
   branch(V(0.05, H, 0), turn(UP, 0.15), 0.95, 0.1, 1, trunkG);
+  // Galhos que saem do meio do tronco preenchem a parte baixa e o centro da copa.
+  for (let k = 0; k < 4; k++) {
+    const a = k * (Math.PI / 2) + 0.4;
+    const y = H * (0.78 + rand() * 0.1);
+    branch(V(0, y, 0), V(Math.cos(a), 0.6, Math.sin(a)).normalize(), 0.95, 0.075, 2, trunkG * (y / H));
+  }
   for (let k = 0; k < 3; k++) {
     const a = k * 2.1 + 0.6;
     root(
@@ -301,14 +311,14 @@ export function createTreeScene(canvas: HTMLCanvasElement, opts: { reduced: bool
     popMaterial({ roughness: 0.5, metalness: 0.15, side: THREE.DoubleSide }, U.leaf, U.time, opts.reduced ? 0 : 0.07),
     t.leaves,
     ["#c89b4f", "#d6ad62", "#b8863f", "#e2c27f", "#b38065"],
-    0.2,
+    0.22,
   );
   instanced(
     new THREE.SphereGeometry(1, 12, 10),
-    popMaterial({ roughness: 0.4 }, U.fruit, U.time, 0),
+    popMaterial({ roughness: 0.35 }, U.fruit, U.time, 0),
     t.fruits,
-    ["#d49a86", "#b38065"],
-    0.07,
+    ["#c2614a", "#d27a5f", "#a94f3c"],
+    0.1,
   );
 
   // Linha do solo: um halo suave separando o que se vê do que sustenta.

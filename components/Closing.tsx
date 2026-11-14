@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { gsap, SplitText, useGSAP, MOTION_OK, scrollToSection } from "@/lib/gsap";
+import { gsap, useGSAP, MOTION_OK, scrollToSection } from "@/lib/gsap";
 import Sprig from "./Sprig";
 
 export default function Closing() {
@@ -14,17 +14,14 @@ export default function Closing() {
       const q = gsap.utils.selector(root);
 
       mm.add(MOTION_OK, () => {
-        const quote = SplitText.create(q(".closing__quote"), { type: "words" });
-        gsap.fromTo(
-          quote.words,
-          { opacity: 0.16 },
-          {
-            opacity: 1,
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: { trigger: q(".closing__quote"), start: "top 80%", end: "bottom 52%", scrub: 0.6 },
-          },
-        );
+        gsap.from(q(".closing__quote, .closing__cta"), {
+          y: 24,
+          autoAlpha: 0,
+          stagger: 0.15,
+          duration: 1.3,
+          ease: "expo.out",
+          scrollTrigger: { trigger: q(".closing__quote"), start: "top 85%" },
+        });
 
         gsap.fromTo(
           q(".closing__sign"),
@@ -59,7 +56,6 @@ export default function Closing() {
           },
         );
 
-        return () => quote.revert();
       });
     },
     { scope: root },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 /* Playlist oficial: open.spotify.com/playlist/6MvhfCzsrBjMVqoAZCIM5z */
 const PLAYLIST_ID = "6MvhfCzsrBjMVqoAZCIM5z";
@@ -14,84 +15,95 @@ function SpotifyLogo({ className }: { className?: string }) {
 }
 
 /**
- * Botão flutuante da playlist.
+ * Botão da playlist no header + menu lateral.
  * O player só é carregado no primeiro clique (o Spotify não pesa na abertura do site)
- * e continua montado depois de fechar o painel, para a música não parar.
+ * e continua montado depois de fechar o menu, para a música não parar.
+ * O menu vai para o <body> via portal: o header tem backdrop-filter, que prenderia um position: fixed.
  */
 export default function SpotifyPlayer() {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    const button = buttonRef.current;
+    closeRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        buttonRef.current?.focus();
-      }
-    };
-    const onClick = (e: MouseEvent) => {
-      const t = e.target as Node;
-      if (!panelRef.current?.contains(t) && !buttonRef.current?.contains(t)) setOpen(false);
+      if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onClick);
+    document.documentElement.classList.add("has-drawer");
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onClick);
+      document.documentElement.classList.remove("has-drawer");
+      button?.focus({ preventScroll: true });
     };
   }, [open]);
 
-  function toggle() {
-    setLoaded(true);
-    setOpen((v) => !v);
+  function openDrawer() {
+    if (!loaded) {
+      setLoaded(true);
+      // Deixa o menu montar fechado antes de abrir, para a entrada deslizar.
+      window.setTimeout(() => setOpen(true), 30);
+      return;
+    }
+    setOpen(true);
   }
 
   return (
-    <div className="spotify">
-      <div
-        ref={panelRef}
-        id="spotify-panel"
-        className={`spotify__panel${open ? " is-open" : ""}`}
-        role="dialog"
-        aria-label="Playlist Em Busca de Mim no Spotify"
-        aria-hidden={!open}
-        inert={!open}
-      >
-        <div className="spotify__head">
-          <p className="spotify__title">
-            Playlist <span className="spotify__script">Em Busca de Mim</span>
-          </p>
-          <button type="button" className="spotify__close" onClick={() => setOpen(false)} aria-label="Fechar playlist">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </button>
-        </div>
-        {loaded && (
-          <iframe
-            className="spotify__frame"
-            title="Playlist Em Busca de Mim no Spotify"
-            src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator`}
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          />
-        )}
-      </div>
-
+    <>
       <button
         ref={buttonRef}
         type="button"
-        className={`spotify__fab${open ? " is-open" : ""}`}
-        onClick={toggle}
+        className="header-music"
+        onClick={openDrawer}
         aria-expanded={open}
-        aria-controls="spotify-panel"
-        aria-label={open ? "Fechar playlist" : "Ouvir a playlist Em Busca de Mim"}
+        aria-controls="playlist-drawer"
+        aria-label="Ouvir a playlist Em Busca de Mim"
       >
-        <SpotifyLogo className="spotify__logo" />
-        <span className="spotify__label">Ouça a playlist</span>
+        <SpotifyLogo className="header-music__logo" />
+        <span className="header-music__label">Ouça a playlist</span>
       </button>
-    </div>
+
+      {loaded &&
+        createPortal(
+          <div className={`drawer${open ? " is-open" : ""}`} inert={!open}>
+            <div className="drawer__scrim" onClick={() => setOpen(false)} aria-hidden="true" />
+            <aside
+              id="playlist-drawer"
+              className="drawer__panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Playlist Em Busca de Mim no Spotify"
+            >
+              <div className="drawer__head">
+                <p className="drawer__title">
+                  Playlist <span className="drawer__script">Em Busca de Mim</span>
+                </p>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  className="drawer__close"
+                  onClick={() => setOpen(false)}
+                  aria-label="Fechar playlist"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </button>
+              </div>
+              <iframe
+                className="drawer__frame"
+                title="Playlist Em Busca de Mim no Spotify"
+                src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator`}
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              />
+            </aside>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

@@ -5,7 +5,6 @@ import Method from "@/components/Method";
 import Format from "@/components/Format";
 import Mentor from "@/components/Mentor";
 import Closing from "@/components/Closing";
-import SpotifyPlayer from "@/components/SpotifyPlayer";
 
 export default function Home() {
   return (
@@ -22,7 +21,6 @@ export default function Home() {
         <Mentor />
         <Closing />
       </main>
-      <SpotifyPlayer />
     </>
   );
 }
